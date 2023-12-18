@@ -4,11 +4,12 @@ import 'dart:typed_data';
 
 import 'package:convert/convert.dart';
 import 'package:crypto/crypto.dart';
-import 'package:minio/minio.dart';
-import 'package:minio/models.dart';
-import 'package:minio/src/minio_client.dart';
-import 'package:minio/src/minio_helpers.dart';
-import 'package:minio/src/utils.dart';
+import 'package:minio_giridhar/src/minio_client.dart';
+import 'package:minio_giridhar/src/minio_helpers.dart';
+import 'package:minio_giridhar/src/minio_models_generated.dart';
+import 'package:minio_giridhar/src/utils.dart';
+
+import 'minio.dart';
 
 class MinioUploader implements StreamConsumer<Uint8List> {
   MinioUploader(
@@ -144,9 +145,9 @@ class MinioUploader implements StreamConsumer<Uint8List> {
 
     final parts = minio.listParts(bucket, object, _uploadId!);
     final entries = await parts
-        .asyncMap((part) => MapEntry(part.partNumber, part))
+        .asyncMap((part) => MapEntry(part, part))
         .toList();
-    _oldParts = Map.fromEntries(entries);
+    _oldParts = Map.fromEntries(entries as Iterable<MapEntry<int?, Part>>);
   }
 
   void _updateProgress(int bytesUploaded) {

@@ -1,10 +1,12 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:minio/io.dart';
-import 'package:minio/minio.dart';
-import 'package:minio/src/minio_models_generated.dart';
-import 'package:minio/src/utils.dart';
+import 'package:minio_giridhar/io.dart';
+import 'package:minio_giridhar/src/minio_client.dart';
+import 'package:minio_giridhar/src/minio_errors.dart';
+import 'package:minio_giridhar/src/minio_helpers.dart';
+import 'package:minio_giridhar/src/minio_models_generated.dart';
+import 'package:minio_giridhar/src/utils.dart';
 import 'package:test/test.dart';
 
 import 'helpers.dart';
@@ -100,7 +102,7 @@ void testListBuckets() {
       () async => await minio.listBuckets(),
       throwsA(
         isA<MinioS3Error>().having(
-          (e) => e.error!.code,
+          (e) => e.error!,
           'code',
           isIn(['AccessDenied', 'InvalidAccessKeyId']),
         ),
@@ -115,7 +117,7 @@ void testListBuckets() {
       () async => await minio.listBuckets(),
       throwsA(
         isA<MinioS3Error>().having(
-          (e) => e.error!.code,
+          (e) => e.error!,
           'code',
           isIn(['AccessDenied', 'SignatureDoesNotMatch']),
         ),

@@ -1,6 +1,7 @@
-import 'package:minio/models.dart';
-import 'package:minio/src/minio_errors.dart';
-import 'package:minio/src/utils.dart';
+
+import 'package:minio_giridhar/src/minio_errors.dart';
+import 'package:minio_giridhar/src/minio_models_generated.dart';
+import 'package:minio_giridhar/src/utils.dart';
 import 'package:xml/xml.dart';
 
 

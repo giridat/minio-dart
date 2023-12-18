@@ -1,9 +1,13 @@
 import 'package:convert/convert.dart';
 import 'package:http/http.dart';
 import 'package:mime/mime.dart' show lookupMimeType;
-import 'package:minio/src/minio_client.dart';
-import 'package:minio/src/minio_errors.dart';
-import 'package:minio/src/minio_models_generated.dart';
+
+import 'package:minio_giridhar/minio.dart';
+import 'package:minio_giridhar/models.dart';
+import 'package:minio_giridhar/src/minio_client.dart';
+import 'package:minio_giridhar/src/minio_helpers.dart';
+import 'package:minio_giridhar/src/minio_models_generated.dart';
+import 'package:minio_giridhar/src/utils.dart';
 import 'package:xml/xml.dart' as xml;
 
 bool isValidBucketName(String bucket) {
@@ -202,7 +206,7 @@ Future<void> validateStreamed(
   if (streamedResponse.statusCode >= 400) {
     final response = await MinioResponse.fromStream(streamedResponse);
     final body = xml.XmlDocument.parse(response.body);
-    final error = Error.fromXml(body.rootElement);
+    final error = MinioErrorEdited.fromXml(body.rootElement);
     throw MinioS3Error(error.message, error, response);
   }
 
@@ -219,10 +223,10 @@ void validate(MinioResponse response, {int? expect}) {
 
     // Parse HTTP response body as XML only when not empty
     if (response.body.isEmpty) {
-      error = Error(response.reasonPhrase, null, response.reasonPhrase, null);
+      error = MinioErrorEdited(response.reasonPhrase, null, response.reasonPhrase, null);
     } else {
       final body = xml.XmlDocument.parse(response.body);
-      error = Error.fromXml(body.rootElement);
+      error = MinioErrorEdited.fromXml(body.rootElement);
     }
 
     throw MinioS3Error(error?.message, error, response);

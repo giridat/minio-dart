@@ -1,6 +1,7 @@
-import 'package:minio/models.dart';
-import 'package:minio/src/minio_client.dart';
-import 'package:minio/src/minio_helpers.dart';
+
+import 'package:minio_giridhar/src/minio_client.dart';
+import 'package:minio_giridhar/src/minio_helpers.dart';
+import 'package:minio_giridhar/src/minio_models_generated.dart';
 
 class MinioError {
   MinioError(this.message);
@@ -87,7 +88,7 @@ class MinioInvalidXMLError extends MinioError {
 class MinioS3Error extends MinioError {
   MinioS3Error(String? message, [this.error, this.response]) : super(message);
 
-  Error? error;
+  MinioErrorEdited? error;
 
   MinioResponse? response;
 }

@@ -3,11 +3,15 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:http/http.dart';
-import 'package:minio/minio.dart';
-import 'package:minio/src/minio_helpers.dart';
-import 'package:minio/src/minio_s3.dart';
-import 'package:minio/src/minio_sign.dart';
-import 'package:minio/src/utils.dart';
+
+import 'package:minio_giridhar/minio.dart';
+import 'package:minio_giridhar/models.dart';
+import 'package:minio_giridhar/src/minio_client.dart';
+import 'package:minio_giridhar/src/minio_helpers.dart';
+import 'package:minio_giridhar/src/minio_models_generated.dart';
+import 'package:minio_giridhar/src/minio_s3.dart';
+import 'package:minio_giridhar/src/minio_sign.dart';
+import 'package:minio_giridhar/src/utils.dart';
 
 class MinioRequest extends BaseRequest {
   MinioRequest(String method, Uri url, {this.onProgress}) : super(method, url);

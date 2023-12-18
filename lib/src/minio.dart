@@ -2,15 +2,16 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:minio/models.dart';
-import 'package:minio/src/minio_client.dart';
-import 'package:minio/src/minio_errors.dart';
-import 'package:minio/src/minio_helpers.dart';
-import 'package:minio/src/minio_poller.dart';
-import 'package:minio/src/minio_sign.dart';
-import 'package:minio/src/minio_stream.dart';
-import 'package:minio/src/minio_uploader.dart';
-import 'package:minio/src/utils.dart';
+
+import 'package:minio_giridhar/minio.dart' ;
+import 'package:minio_giridhar/models.dart' ;
+import 'package:minio_giridhar/src/minio_client.dart';
+import 'package:minio_giridhar/src/minio_helpers.dart' ;
+import 'package:minio_giridhar/src/minio_models_generated.dart';
+import 'package:minio_giridhar/src/minio_poller.dart';
+import 'package:minio_giridhar/src/minio_sign.dart';
+import 'package:minio_giridhar/src/minio_uploader.dart';
+import 'package:minio_giridhar/src/utils.dart';
 import 'package:xml/xml.dart' as xml;
 import 'package:xml/xml.dart' show XmlElement;
 
@@ -94,7 +95,7 @@ class Minio {
       validate(response);
       return response.statusCode == 200;
     } on MinioS3Error catch (e) {
-      final code = e.error?.code;
+      final code = e.error.toString();
       if (code == 'NoSuchBucket' || code == 'NotFound' || code == 'Not Found') {
         return false;
       }
@@ -155,7 +156,7 @@ class Minio {
     final node = xml.XmlDocument.parse(resp.body);
     final errorNode = node.findAllElements('Error');
     if (errorNode.isNotEmpty) {
-      final error = Error.fromXml(errorNode.first);
+      final error = MinioErrorEdited.fromXml(errorNode.first);
       throw MinioS3Error(error.message, error, resp);
     }
 

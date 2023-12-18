@@ -1061,15 +1061,15 @@ class EndEvent {
 }
 
 /// Container for all error elements.
-class Error {
-  Error(
+class MinioErrorEdited {
+  MinioErrorEdited(
     this.code,
     this.key,
     this.message,
     this.versionId,
   );
 
-  Error.fromXml(XmlElement xml) {
+  MinioErrorEdited.fromXml(XmlElement xml) {
     code = getProp(xml, 'Code')?.text;
     key = getProp(xml, 'Key')?.text;
     message = getProp(xml, 'Message')?.text;
@@ -1078,7 +1078,7 @@ class Error {
 
   XmlNode toXml() {
     final builder = XmlBuilder();
-    builder.element('Error', nest: () {
+    builder.element('MinioErrorEdited', nest: () {
       builder.element('Code', nest: code);
       builder.element('Key', nest: key);
       builder.element('Message', nest: message);
@@ -1101,7 +1101,7 @@ class Error {
 
   @override
   String toString() {
-    return 'Error{code: $code, key: $key, message: $message, versionId: $versionId}';
+    return 'MinioErrorEdited{code: $code, key: $key, message: $message, versionId: $versionId}';
   }
 }
 
